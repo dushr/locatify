@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<form action='{% url search %}' method='get'>
-		{{ form }}
-		<input type="submit" value="Search" >
-	</form>
+	<div class="content-inner">
+		 <h1 class="pump-up">
+        	Look for images in a city <br />
+    	</h1>
+		<div class="full-search-bar">
+	        <ul class="item-stream unstyled search-input-stream">
+	            <li class="stream-item stream-header search-input-item">
+	                <form class="form-inline search-form" action="{% url search %}">
+	                    <input class="xlarge" name="query" type="text" placeholder="London, Delhi, Chicago...." value="" role="textbox">
+	                    <button class="btn btn-large btn-inverse" type="submit"><i class="icon-search icon-white"></i></button>
+	                </form>
+	            </li>
+	        </ul>
+    	</div>
+	</div>
 {% endblock content %}
 

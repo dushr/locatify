@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+	<div class="content-inner">
 	{% for photo in photos %}
 		<img src="{{ photo.get_s_img_url }}">
 	{% endfor %}
+</div>
 {% endblock content %}

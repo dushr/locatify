@@ -6,13 +6,31 @@
 				Locatify
 			{% endblock title %}
 		</title>
+		<link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" media="screen">
+
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
 	{% endblock head %}
 	</head>
 
 	<body>
-		{% block content %}
-
-		{% endblock content %}
+	  <div class="container">
+	    <div class="header">
+	        <span class="big-logo">{ Locatify }</span>	             
+	        <ul class="nav-bar pull-right">
+		        <li>
+		          <form class="navbar-search" action="{% url search %}">
+		              <input type="text" name="query" value="{{ form.query.value|default:"" }}" id="id_query" placeholder="Search" />
+		          </form>
+		        </li>
+      		
+      		</ul>
+	    </div>
+	    <div class="content">
+	        {% block content %}
+	        {% endblock %}
+	    </div>
+  </div>
 	</body>
 
 </html>
