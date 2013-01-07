@@ -2,8 +2,65 @@
 
 {% block content %}
 	<div class="content-inner">
-	{% for photo in photos %}
-		<img src="{{ photo.get_s_img_url }}">
-	{% endfor %}
+		{% for photo in photos %}
+			<a href="{{ photo.get_img_url }}" class="img-modal" alt="{{ photo.title }}"><img src="{{ photo.get_s_img_url }}" alt="{{ photo.title }}"></a>
+		{% empty %}
+			<h3 class="pump-up">Oops...No results found.</h3>
+		{% endfor %}
+	</div>
+	{% if photos %}
+		<a href="{% url search %}?{{ query }}&page={{ page|add:1 }}" id='next-page-link'></a>
+	{% endif %}
+	<span id="loading" class="hide">Loading More...</span>
+
+ 
+ <div id="myModal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Modal header</h3>
+  </div>
+  <div class="modal-body">
+     <img src="#" id="modal-img">
+  </div>
+
 </div>
+	<script type="text/javascript">
+		function run_modal_check(){
+			$('.img-modal').click(function(event){
+				var img_href = $(this).attr('href');
+				var alt_text = $(this).attr('alt');
+				$('#myModal #modal-img').attr('src', img_href);
+				$('#myModal #modal-img').attr('alt', alt_text);
+				$('#myModal .modal-header h3').html(alt_text);
+				$('#myModal').modal("show");
+				return false;
+			});
+		}
+		function get_new_content(){
+			var href = $('#next-page-link').attr('href');
+			if(href){
+				$.get(href, function(data){
+					var images = $('.content-inner', data).html();
+					var next_url = $('#next-page-link', data).attr('href');
+					$('.content-inner').append(images);
+					$('#next-page-link').attr('href', next_url);
+					$("#loading").addClass('hide');
+					run_modal_check();
+				});
+			}
+		}
+		$(document).ready(function() {		
+			$(window).scroll(function(){
+	        	if  ($(window).scrollTop() >= ($(document).height() - $(window).height() - 10)){
+	        		var href = $('#next-page-link').attr('href');
+	        		if ($('#loading').hasClass('hide') == true && href) {
+	        			$('#loading').removeClass('hide');
+	            		get_new_content();
+	            	}
+	        	}
+			});
+	});
+
+		$(document).ready(run_modal_check());
+	</script>
 {% endblock content %}
