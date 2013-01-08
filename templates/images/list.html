@@ -49,6 +49,18 @@
 				});
 			}
 		}
+        $(document).ready(function(){
+            console.log($(document).height());
+            console.log($(window).height());
+            if ($(window).height() > 790 ){
+                var href = $('#next-page-link').attr('href');
+                if ($('#loading').hasClass('hide') == true && href) {
+                    $('#loading').removeClass('hide');
+                    get_new_content();
+                }
+            }
+        
+        });
 		$(document).ready(function() {		
 			$(window).scroll(function(){
 	        	if  ($(window).scrollTop() >= ($(document).height() - $(window).height() - 10)){
@@ -59,7 +71,7 @@
 	            	}
 	        	}
 			});
-	});
+    	});
 
 		$(document).ready(run_modal_check());
 	</script>
